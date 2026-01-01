@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yılbaşı Mesajı</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Georgia, serif;
+}
+
+/* ARKA PLAN – KESİN ÇALIŞIR */
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+    url("https://images.unsplash.com/photo-1608889175250-c3b0c1666f6b?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
+
+/* KAR */
+.snow {
+  position: fixed;
+  top: -10px;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.6;
+  z-index: 1;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh); }
+}
+
+/* IŞIKLAR */
+.light {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: blink 1.5s infinite alternate;
+  z-index: 2;
+}
+
+@keyframes blink {
+  from { opacity: 0.2; }
+  to { opacity: 1; }
+}
+
+/* ORTA ALAN */
+.center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1200px;
+  z-index: 5;
+}
+
+/* 3D ZARF */
+.envelope {
+  width: 280px;
+  height: 180px;
+  background: linear-gradient(145deg, #ffffff, #d9d9d9);
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  box-shadow: 0 25px 45px rgba(0,0,0,0.5);
+  animation: floatIn 2s ease-out forwards;
+}
+
+/* ZARF KAPAĞI */
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, #f0f0f0, #cfcfcf);
+  clip-path: polygon(0 0, 100% 0, 50% 65%);
+  transform-origin: top;
+  transition: transform 1.2s ease;
+}
+
+.envelope.open::before {
+  transform: rotateX(180deg);
+}
+
+/* KAĞIT */
+.paper {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 0;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: height 1.6s ease;
+}
+
+.envelope.open .paper {
+  height: 300px;
+}
+
+/* YAZI */
+.text {
+  padding: 22px;
+  color: #e91e63;
+  font-size: 18px;
+  text-align: center;
+  line-height: 1.7;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.envelope.open .text {
+  opacity: 1;
+}
+
+/* ZARF GELİŞ */
+@keyframes floatIn {
+  from {
+    transform: translateY(-300px) rotateX(25deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) rotateX(0deg);
+    opacity: 1;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="center">
+  <div class="envelope" onclick="openEnvelope()">
+    <div class="paper">
+      <div class="text">
+        Belinay<br><br>
+        Yılın ilk gününü sana bıraktım,<br>
+        zaten diğer günlerini<br>
+        sen bana hediye ediyorsun
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openEnvelope() {
+  document.querySelector(".envelope").classList.add("open");
+}
+
+/* KAR */
+for (let i = 0; i < 40; i++) {
+  const s = document.createElement("div");
+  s.className = "snow";
+  s.style.left = Math.random() * 100 + "vw";
+  s.style.animationDuration = 6 + Math.random() * 6 + "s";
+  document.body.appendChild(s);
+}
+
+/* IŞIKLAR */
+const colors = ["red","gold","lime","deepskyblue"];
+for (let i = 0; i < 30; i++) {
+  const l = document.createElement("div");
+  l.className = "light";
+  l.style.left = 30 + Math.random() * 40 + "vw";
+  l.style.top = 20 + Math.random() * 50 + "vh";
+  l.style.background = colors[Math.floor(Math.random()*colors.length)];
+  l.style.animationDuration = 1 + Math.random() * 2 + "s";
+  document.body.appendChild(l);
+}
+</script>
+
+</body>
+        </html>
