@@ -11,8 +11,8 @@ html,body{
   width:100%;
   height:100%;
   overflow:hidden;
-  font-family:Georgia,serif;
   background:#0b1220;
+  font-family:Georgia,serif;
 }
 
 /* AĞAÇ */
@@ -25,7 +25,6 @@ html,body{
   font-size:22rem;
   opacity:0.25;
   filter:blur(1px);
-  z-index:0;
 }
 
 /* YILDIZ */
@@ -37,28 +36,9 @@ html,body{
   font-size:4rem;
   color:gold;
   text-shadow:0 0 25px gold;
-  animation:starGlow 1.5s infinite alternate;
-  z-index:1;
+  animation:glow 1.5s infinite alternate;
 }
-@keyframes starGlow{
-  from{opacity:.6;}
-  to{opacity:1;}
-}
-
-/* KAR */
-.snow{
-  position:fixed;
-  top:-10px;
-  width:6px;
-  height:6px;
-  background:white;
-  border-radius:50%;
-  opacity:.25;
-  animation:fall linear infinite;
-}
-@keyframes fall{
-  to{transform:translateY(120vh);}
-}
+@keyframes glow{to{opacity:1;}}
 
 /* İLK MESAJ */
 #intro{
@@ -70,11 +50,10 @@ html,body{
   font-size:3rem;
   color:white;
   text-shadow:0 0 30px gold;
-  z-index:5;
   animation:introFade 2s ease 4s forwards;
 }
 @keyframes introFade{
-  to{opacity:0; visibility:hidden;}
+  to{opacity:0;visibility:hidden;}
 }
 
 /* ZARF */
@@ -85,40 +64,27 @@ html,body{
   transform:translateX(-50%);
   width:260px;
   height:170px;
-  background:#f5f5f5;
+  background:#f3f3f3;
   border-radius:10px;
-  box-shadow:0 25px 50px rgba(0,0,0,.7);
+  box-shadow:0 25px 50px rgba(0,0,0,.6);
   animation:drop 2.5s ease forwards;
   animation-delay:4s;
-  z-index:10;
 }
 @keyframes drop{
   to{top:55%;transform:translate(-50%,-50%);}
 }
 
-/* KAPAK */
-#flap{
-  position:absolute;
-  inset:0;
-  background:#e0e0e0;
-  clip-path:polygon(0 0,100% 0,50% 55%);
-  transform-origin:top;
-  transition:transform 1s ease;
-  z-index:3;
-}
-
-/* MEKTUP */
+/* KAĞIT */
 #letter{
   position:absolute;
-  bottom:10px;
+  bottom:15px;
   left:50%;
   transform:translateX(-50%);
   width:230px;
   height:0;
   background:white;
   overflow-y:auto;
-  transition:height 1.5s ease;
-  z-index:2;
+  transition:height 1.4s ease;
 }
 
 /* YAZI */
@@ -139,21 +105,12 @@ html,body{
 <div id="intro">Belinay yılbaşın kutlu olsun🥳</div>
 
 <div id="envelope">
-  <div id="flap"></div>
-  <div id="letter"><div id="text"></div></div>
+  <div id="letter">
+    <div id="text"></div>
+  </div>
 </div>
 
 <script>
-/* KAR */
-for(let i=0;i<40;i++){
-  let s=document.createElement("div");
-  s.className="snow";
-  s.style.left=Math.random()*100+"vw";
-  s.style.animationDuration=8+Math.random()*6+"s";
-  document.body.appendChild(s);
-}
-
-/* MESAJ */
 const message =
 `Belinay
 
@@ -165,7 +122,8 @@ Biliyorum çok ani oldu
 ama ben daha fazla dayanamıcam,
 senden çok hoşlanıyorum.`;
 
-let i=0;
+let i=0, opened=false;
+
 function typeWriter(){
   if(i<message.length){
     document.getElementById("text").innerHTML+=message.charAt(i);
@@ -174,22 +132,16 @@ function typeWriter(){
   }
 }
 
-/* ZARF AÇ (TEK SEFER) */
-let opened=false;
-function openLetter(){
+function showLetter(){
   if(opened) return;
   opened=true;
-  document.getElementById("flap").style.transform="rotateX(180deg)";
   document.getElementById("letter").style.height="260px";
-  setTimeout(typeWriter,400);
+  setTimeout(typeWriter,300);
 }
 
-/* ⏱️ OTOMATİK AÇILMA (GARANTİ) */
-setTimeout(openLetter, 7000);
-
 /* DOKUNMA + TIKLAMA */
-document.getElementById("envelope").addEventListener("click", openLetter);
-document.getElementById("envelope").addEventListener("touchstart", openLetter);
+document.getElementById("envelope").addEventListener("click", showLetter);
+document.getElementById("envelope").addEventListener("touchstart", showLetter);
 </script>
 
 </body>
