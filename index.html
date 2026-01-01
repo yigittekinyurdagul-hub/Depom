@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -14,10 +15,10 @@ html,body{
   font-family:Georgia,serif;
 }
 
-/* 🎄 ARKA PLAN (KARARTILMIŞ GECE) */
+/* 🌑 ARKA PLAN – ÇOK KARANLIK */
 body{
   background:
-    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
+    linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)),
     url("https://images.unsplash.com/photo-1608889175123-8ee43d9f5c6f?auto=format&fit=crop&w=1920&q=80")
     no-repeat center center fixed;
   background-size:cover;
@@ -31,11 +32,11 @@ body{
   height:6px;
   background:white;
   border-radius:50%;
-  opacity:.35;
+  opacity:.25;
   animation:fall linear infinite;
 }
 @keyframes fall{
-  to{transform:translateY(110vh);}
+  to{transform:translateY(120vh);}
 }
 
 /* İLK MESAJ */
@@ -47,9 +48,9 @@ body{
   justify-content:center;
   font-size:3rem;
   color:white;
-  text-shadow:0 0 25px gold;
-  z-index:5;
-  animation:introFade 2s ease 3s forwards;
+  text-shadow:0 0 30px gold;
+  z-index:10;
+  animation:introFade 2s ease 4s forwards;
 }
 @keyframes introFade{
   to{opacity:0; visibility:hidden;}
@@ -58,16 +59,16 @@ body{
 /* ✉️ ZARF */
 #envelope{
   position:absolute;
-  top:-260px;
+  top:-300px;
   left:50%;
   transform:translateX(-50%);
   width:260px;
   height:170px;
   background:#f5f5f5;
   border-radius:10px;
-  box-shadow:0 20px 40px rgba(0,0,0,.6);
-  animation:drop 2s ease forwards;
-  animation-delay:3s;
+  box-shadow:0 25px 50px rgba(0,0,0,.7);
+  animation:drop 2.5s ease forwards;
+  animation-delay:4s;
   cursor:pointer;
 }
 @keyframes drop{
@@ -81,7 +82,7 @@ body{
   width:100%;
   height:100%;
   background:#e0e0e0;
-  clip-path:polygon(0 0,100% 0,50% 50%);
+  clip-path:polygon(0 0,100% 0,50% 55%);
 }
 
 /* KAĞIT */
@@ -94,15 +95,15 @@ body{
   height:0;
   background:white;
   overflow:hidden;
-  transition:height 1.5s ease;
+  transition:height 2s ease;
 }
 
 /* YAZI */
 #text{
   padding:20px;
-  color:pink;
+  color:#ff7aa2;
   font-size:1.1rem;
-  line-height:1.6;
+  line-height:1.8;
   white-space:pre-line;
 }
 </style>
@@ -110,10 +111,8 @@ body{
 
 <body>
 
-<!-- İLK YAZI -->
 <div id="intro">Belinay yılbaşın kutlu olsun</div>
 
-<!-- ZARF -->
 <div id="envelope" onclick="openLetter()">
   <div id="letter">
     <div id="text"></div>
@@ -122,15 +121,15 @@ body{
 
 <script>
 /* KAR */
-for(let i=0;i<40;i++){
+for(let i=0;i<50;i++){
   let s=document.createElement("div");
   s.className="snow";
   s.style.left=Math.random()*100+"vw";
-  s.style.animationDuration=6+Math.random()*6+"s";
+  s.style.animationDuration=8+Math.random()*6+"s";
   document.body.appendChild(s);
 }
 
-/* MESAJ (DAKTİLO) */
+/* MESAJ – ÇOK YAVAŞ DAKTİLO */
 const message =
 `Belinay
 
@@ -140,19 +139,19 @@ zaten diğer günlerini sen bana hediye ediyorsun.
 Evet hızlı oldu ama ben
 daha fazla bekleyemezdim.`;
 
-let i = 0;
+let index = 0;
 function typeWriter(){
-  if(i < message.length){
-    document.getElementById("text").innerHTML += message.charAt(i);
-    i++;
-    setTimeout(typeWriter, 70); // yazma hızı (okunabilir)
+  if(index < message.length){
+    document.getElementById("text").innerHTML += message.charAt(index);
+    index++;
+    setTimeout(typeWriter, 120); // BİLEREK ÇOK YAVAŞ
   }
 }
 
 /* ZARF AÇ */
 function openLetter(){
-  document.getElementById("letter").style.height = "260px";
-  setTimeout(typeWriter, 500);
+  document.getElementById("letter").style.height = "280px";
+  setTimeout(typeWriter, 800);
 }
 </script>
 
