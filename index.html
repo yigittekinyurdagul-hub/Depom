@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belinay 💖</title>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Georgia', serif;
+}
+
+/* Arka plan */
+body {
+    background: url('https://images.unsplash.com/photo-1608889175230-99f3f8f59c1d?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+}
+
+/* Karanlık gece efekti */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+}
+
+/* Kar */
+.snow {
+    position: fixed;
+    top: -10px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+    }
+}
+
+/* İlk yazı */
+#intro {
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    text-align: center;
+    font-size: 2.3em;
+    color: #fff;
+    z-index: 5;
+}
+
+/* Zarf */
+#envelope {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 180px;
+    background: #f5f5f5;
+    border-radius: 6px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    cursor: pointer;
+    z-index: 6;
+    transition: top 2s ease-in-out;
+}
+
+/* Kapak */
+#flap {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #eaeaea;
+    clip-path: polygon(0 0, 50% 50%, 100% 0);
+    transform-origin: top;
+    transition: transform 1s;
+}
+
+/* Kağıt */
+#letter {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    height: 140px;
+    background: #fff;
+    padding: 15px;
+    display: none;
+    font-size: 1.2em;
+    color: #e91e63;
+}
+
+/* Yanıp sönen ışık efekti */
+.light {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: yellow;
+    border-radius: 50%;
+    animation: blink 1.5s infinite alternate;
+}
+
+@keyframes blink {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div id="intro">Belinay<br>Yılbaşın Kutlu Olsun 🎄</div>
+
+<div id="envelope">
+    <div id="flap"></div>
+    <div id="letter"></div>
+</div>
+
+<audio id="openSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8e3e5b4c6b.mp3"></audio>
+<audio id="writeSound" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_8c5c8f08b2.mp3"></audio>
+<audio id="music" loop src="https://cdn.pixabay.com/download/audio/2022/12/20/audio_9e4d7e68c1.mp3"></audio>
+
+<script>
+/* Kar oluştur */
+for(let i=0;i<60;i++){
+    let s=document.createElement('div');
+    s.className='snow';
+    let size=Math.random()*4+2;
+    s.style.width=size+'px';
+    s.style.height=size+'px';
+    s.style.left=Math.random()*100+'vw';
+    s.style.animationDuration=(Math.random()*5+5)+'s';
+    document.body.appendChild(s);
+}
+
+/* Zarf 2 sn sonra insin */
+setTimeout(()=>{
+    document.getElementById('intro').style.display='none';
+    document.getElementById('envelope').style.top='45%';
+},2000);
+
+let opened=false;
+
+document.getElementById('envelope').onclick=()=>{
+    if(opened) return;
+    opened=true;
+
+    document.getElementById('music').play();
+    document.getElementById('openSound').play();
+    document.getElementById('flap').style.transform='rotateX(180deg)';
+
+    setTimeout(()=>{
+        const letter=document.getElementById('letter');
+        letter.style.display='block';
+        typeText(
+`Belinay
+
+Herkes yeni yıla…
+Sen yıllarıma olur musun?`,
+        letter);
+    },1000);
+};
+
+/* Yazı yazma efekti */
+function typeText(text,el){
+    let i=0;
+    const sound=document.getElementById('writeSound');
+    sound.play();
+    const interval=setInterval(()=>{
+        el.innerHTML+=text.charAt(i);
+        i++;
+        if(i>=text.length){
+            clearInterval(interval);
+            sound.pause();
+        }
+    },70);
+}
+</script>
+
+</body>
+</html>
