@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yeni Yıl</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Georgia,serif;
+}
+
+/* 🎄 ARKA PLAN AĞAÇ */
+body{
+  background:url("https://images.unsplash.com/photo-1608889175123-8ee43d9f5c6f?auto=format&fit=crop&w=1920&q=80")
+  no-repeat center center fixed;
+  background-size:cover;
+}
+
+/* KAR */
+.snow{
+  position:fixed;
+  top:-10px;
+  width:6px;
+  height:6px;
+  background:white;
+  border-radius:50%;
+  opacity:.35;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  to{transform:translateY(110vh);}
+}
+
+/* İLK MESAJ */
+#intro{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:3rem;
+  color:white;
+  text-shadow:0 0 25px gold;
+  z-index:5;
+  animation:introFade 2s ease 3s forwards;
+}
+@keyframes introFade{
+  to{opacity:0; visibility:hidden;}
+}
+
+/* ✉️ ZARF */
+#envelope{
+  position:absolute;
+  top:-250px;
+  left:50%;
+  transform:translateX(-50%);
+  width:260px;
+  height:170px;
+  background:#f5f5f5;
+  border-radius:10px;
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
+  animation:drop 2s ease forwards;
+  animation-delay:3s;
+}
+@keyframes drop{
+  to{top:50%;transform:translate(-50%,-50%);}
+}
+
+/* ZARF KAPAK */
+#envelope:before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:#e0e0e0;
+  clip-path:polygon(0 0,100% 0,50% 50%);
+}
+
+/* KAĞIT */
+#letter{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:220px;
+  height:0;
+  background:white;
+  overflow:hidden;
+  transition:height 1.5s ease;
+}
+
+/* YAZI */
+#text{
+  padding:20px;
+  color:pink;
+  font-size:1.1rem;
+  line-height:1.6;
+}
+</style>
+</head>
+
+<body>
+
+<!-- İLK MESAJ -->
+<div id="intro">Belinay yılbaşın kutlu olsun</div>
+
+<!-- ZARF -->
+<div id="envelope" onclick="openLetter()">
+  <div id="letter">
+    <div id="text">
+      Belinay<br><br>
+      Yılın ilk gününü sana bıraktım,<br>
+      zaten diğer günlerini sen bana hediye ediyorsun.
+    </div>
+  </div>
+</div>
+
+<script>
+/* KAR */
+for(let i=0;i<40;i++){
+  let s=document.createElement("div");
+  s.className="snow";
+  s.style.left=Math.random()*100+"vw";
+  s.style.animationDuration=6+Math.random()*6+"s";
+  document.body.appendChild(s);
+}
+
+/* ZARF AÇ */
+function openLetter(){
+  document.getElementById("letter").style.height="180px";
+}
+</script>
+
+</body>
+</html>
