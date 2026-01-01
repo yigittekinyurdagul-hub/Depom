@@ -15,7 +15,7 @@ html,body{
   background:#0b1220;
 }
 
-/* 🎄 DEV EMOJİ AĞAÇ */
+/* 🎄 DEV AĞAÇ */
 #tree{
   position:fixed;
   inset:0;
@@ -28,6 +28,23 @@ html,body{
   z-index:0;
 }
 
+/* ⭐ YILDIZ */
+#star{
+  position:fixed;
+  top:18%;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:4rem;
+  color:gold;
+  text-shadow:0 0 20px gold;
+  animation:starGlow 1.5s infinite alternate;
+  z-index:1;
+}
+@keyframes starGlow{
+  from{opacity:.6;}
+  to{opacity:1;}
+}
+
 /* 🌈 IŞIKLAR */
 .light{
   position:absolute;
@@ -37,8 +54,8 @@ html,body{
   animation:blink 2s infinite alternate;
 }
 @keyframes blink{
-  0%{opacity:.2;}
-  100%{opacity:1;}
+  from{opacity:.3;}
+  to{opacity:1;}
 }
 
 /* KAR */
@@ -56,7 +73,7 @@ html,body{
   to{transform:translateY(120vh);}
 }
 
-/* İLK YAZI */
+/* İLK MESAJ */
 #intro{
   position:absolute;
   inset:0;
@@ -93,14 +110,16 @@ html,body{
   to{top:55%;transform:translate(-50%,-50%);}
 }
 
-/* ZARF KAPAK */
-#envelope:before{
-  content:"";
+/* ZARF KAPAĞI */
+#flap{
   position:absolute;
+  top:0;
   width:100%;
   height:100%;
   background:#e0e0e0;
   clip-path:polygon(0 0,100% 0,50% 55%);
+  transform-origin:top;
+  transition:transform 1s ease;
 }
 
 /* KAĞIT */
@@ -112,8 +131,8 @@ html,body{
   width:230px;
   height:0;
   background:white;
-  overflow:hidden;
-  transition:height 2s ease;
+  overflow-y:auto;
+  transition:height 1.5s ease;
 }
 
 /* YAZI */
@@ -121,7 +140,7 @@ html,body{
   padding:20px;
   color:#ff7aa2;
   font-size:1.1rem;
-  line-height:1.8;
+  line-height:1.7;
   white-space:pre-line;
 }
 </style>
@@ -129,14 +148,13 @@ html,body{
 
 <body>
 
-<!-- 🎄 ARKA PLAN AĞAÇ -->
 <div id="tree">🎄</div>
+<div id="star">⭐</div>
 
-<!-- İLK MESAJ -->
-<div id="intro">Belinay yılbaşın kutlu olsun</div>
+<div id="intro">Belinay yılbaşın kutlu olsun🥳</div>
 
-<!-- ZARF -->
 <div id="envelope" onclick="openLetter()">
+  <div id="flap"></div>
   <div id="letter">
     <div id="text"></div>
   </div>
@@ -152,7 +170,7 @@ for(let i=0;i<45;i++){
   document.body.appendChild(s);
 }
 
-/* AĞAÇ IŞIKLARI */
+/* IŞIKLAR */
 const colors=["red","gold","cyan","pink","lime"];
 for(let i=0;i<30;i++){
   let l=document.createElement("div");
@@ -164,29 +182,32 @@ for(let i=0;i<30;i++){
   document.body.appendChild(l);
 }
 
-/* DAKTİLO YAZI */
+/* MESAJ */
 const message =
-`Belinay
+`Belinay`
 
-Yılın ilk gününü sana bıraktım,
-zaten diğer günlerini sen bana hediye ediyorsun.
+Yılbaşının ilk gününü sana bıraktım,
+zaten diğer günlerini
+zaten sen bana hediye ettin.
 
-Evet hızlı oldu ama ben
-daha fazla bekleyemezdim.`;
+Biliyorum çok ani oldu
+ama ben daha fazla dayanamıcam,
+senden çok hoşlanıyorum.`;
 
 let i=0;
 function typeWriter(){
   if(i<message.length){
     document.getElementById("text").innerHTML+=message.charAt(i);
     i++;
-    setTimeout(typeWriter,120);
+    setTimeout(typeWriter,70);
   }
 }
 
 /* ZARF AÇ */
 function openLetter(){
-  document.getElementById("letter").style.height="280px";
-  setTimeout(typeWriter,800);
+  document.getElementById("flap").style.transform="rotateX(180deg)";
+  document.getElementById("letter").style.height="260px";
+  setTimeout(typeWriter,500);
 }
 </script>
 
